@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucesso! Ambiente Pronto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="onboarding-container text-center">
+        <div id="success-content" class="success-box hidden">
+            <div class="checkmark-animation">
+                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+            </div>
+            
+            <h1 class="success-title">Cadastro Concluído!</h1>
+            <h2 class="success-subtitle" id="welcome-message"></h2>
+            <p class="success-text">Seu ambiente Odoo foi provisionado e está pronto para uso.</p>
+
+            <div class="access-card">
+                <h3>Dados para Acesso</h3>
+                <ul class="access-details">
+                    <li><strong>Empresa:</strong> <span id="company-display"></span></li>
+                    <li><strong>Usuário (E-mail):</strong> <span id="email-display"></span></li>
+                    <li><strong>Senha:</strong> A senha que você cadastrou</li>
+                </ul>
+            </div>
+
+            <a href="https://erp.inetz.com.br/web/login" class="btn-access" target="_blank">
+                Acessar Odoo Agora
+            </a>
+            <p class="mt-4"><small>Você já pode fechar esta página.</small></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name');
+            const company = params.get('company');
+            const email = params.get('email');
+            
+            if (name && company && email) {
+                document.getElementById('welcome-message').textContent = `Bem-vindo(a), ${name}!`;
+                document.getElementById('company-display').textContent = company;
+                document.getElementById('email-display').textContent = email;
+                document.getElementById('success-content').classList.remove('hidden');
+            } else {
+                // Caso a página seja acessada sem parâmetros
+                document.getElementById('success-content').innerHTML = 
+                    '<h1 class="error-title">Erro de Acesso</h1><p>Os dados de sucesso não foram encontrados. Por favor, tente o login diretamente.</p><a href="https://erp.inetz.com.br/web/login" class="btn-access">Ir para o Login</a>';
+                document.getElementById('success-content').classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
